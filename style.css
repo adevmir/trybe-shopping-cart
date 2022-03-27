@@ -114,6 +114,10 @@ body {
   text-align: center;
 }
 
+.item__price {
+  padding: 10px;
+}
+
 .item .item__image {
   width: 100%;
 }

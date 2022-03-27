@@ -6,7 +6,6 @@ const fetchProducts = async (QUERY) => {
   .then((data) => data.results)
   .catch((error) => (error));
   return fetched;
-  // return QUERY;
 };
 
 if (typeof module !== 'undefined') {

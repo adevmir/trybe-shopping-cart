@@ -1,5 +1,7 @@
 // const { fetchProducts } = require("./helpers/fetchProducts");
 
+// const { fetchItem } = require("./helpers/fetchItem");
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -14,31 +16,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-}
-
-const aplicaForEachApi = async () => {
-  const results = await fetchProducts('computador');
-  console.log(results);
-  return results.forEach((produto) => {
-    const sku = produto.id;
-    const name = produto.title;
-    const image = produto.thumbnail;
-    const produtos = createProductItemElement({ sku, name, image });
-    const listaProdutos = document.querySelector('.items');
-    listaProdutos.appendChild(produtos);
-  });
-};
-
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
@@ -51,10 +28,63 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', cartItemClickListener());
   return li;
 }
 
+const addCartItem = async (event) => {
+  const sku = getSkuFromProductItem(event.target.parentNode);
+  const { title, price, thumbnail } = await fetchItem(sku);
+  const item = {
+    sku,
+    name: title,
+    salePrice: price,
+  };
+  const cartItem = createCartItemElement(item);
+  console.log(cartItem);
+  const cart = document.querySelector('.cart__items');
+  cart.appendChild(createProductImageElement(thumbnail));
+  cart.appendChild(cartItem);
+};
+
+function createAddCart() {
+  setTimeout(() => {
+    const buttonFunction = document.querySelectorAll('.item__add');
+    buttonFunction.forEach((but) => {
+      button = but;
+      // console.log(button);
+      button.onclick = addCartItem;
+    });
+  }, 2000);
+}
+
+function createProductItemElement({ sku, name, image, price }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__price', `R$ ${price}`));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+
+  return section;
+}
+
+const aplicaForEachApi = async () => {
+  const results = await fetchProducts('computador');
+  return results.forEach((produto) => {
+    const sku = produto.id;
+    const name = produto.title;
+    const image = produto.thumbnail;
+    const { price } = produto;
+    const produtos = createProductItemElement({ sku, name, image, price });
+    const listaProdutos = document.querySelector('.items');
+    listaProdutos.appendChild(produtos);
+  });
+};
+
 window.onload = () => {
   aplicaForEachApi();
+  createAddCart();
  };
