@@ -4,7 +4,6 @@ const getSavedCartItems = () => {
     console.log('0');
   } else {
     const cart = document.querySelector('.cart__items');
-
     console.log(items);
     cart.innerHTML = items;
   }
