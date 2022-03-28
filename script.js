@@ -24,8 +24,7 @@ async function totalPrice() {
   });
   console.log(sum.toFixed(2));
   const teste2 = document.querySelector('.total-price');
-  teste2.innerHTML = `Total price R$ ${sum.toFixed(2)}`;
-  
+  teste2.innerHTML = `Total price R$ ${sum.toFixed(2)}`; 
 }
 
 function saveAndPrice() {
