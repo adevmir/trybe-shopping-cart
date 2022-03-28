@@ -26,7 +26,7 @@ function cartItemClickListener(event) {
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
-  li.className = 'cart__items';
+  li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener());
   return li;
@@ -43,7 +43,7 @@ const addCartItem = async (event) => {
   const cartItem = createCartItemElement(item);
   console.log(cartItem);
   const cart = document.querySelector('.cart__items');
-  cart.appendChild(createProductImageElement(thumbnail));
+  // cart.appendChild(createProductImageElement(thumbnail));
   cart.appendChild(cartItem);
 };
 
