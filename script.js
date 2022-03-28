@@ -22,7 +22,6 @@ async function totalPrice() {
     const value = element.innerHTML.split('$')[1];
     sum += parseFloat(value);
   });
-  console.log(sum.toFixed(2));
   const teste2 = document.querySelector('.total-price');
   teste2.innerHTML = `Total price R$ ${sum.toFixed(2)}`; 
 }
