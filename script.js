@@ -15,16 +15,22 @@ function insertTotalPrice() {
   button.insertAdjacentElement('beforebegin', price);
 }
 
-function totalPrice() {
+async function totalPrice() {
   const cart = document.querySelectorAll('.cart__item');
   let sum = 0;
   [...cart].forEach((element) => {
     const value = element.innerHTML.split('$')[1];
     sum += parseFloat(value);
   });
-  const teste2 = document.querySelector('.total-price');
-  teste2.innerHTML = `Total price R$ ${sum}`;
   console.log(sum.toFixed(2));
+  const teste2 = document.querySelector('.total-price');
+  teste2.innerHTML = `Total price R$ ${sum.toFixed(2)}`;
+  
+}
+
+function saveAndPrice() {
+  saveCartItems();
+  totalPrice();
 }
 
 function createProductImageElement(imageSource) {
@@ -47,8 +53,7 @@ function getSkuFromProductItem(item) {
 
 async function cartItemClickListener(event) {
   event.target.parentNode.removeChild(event.target);
-  saveCartItems();
-  totalPrice();
+  saveAndPrice();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -71,8 +76,7 @@ const addCartItem = async (event) => {
   const cart = document.querySelector('.cart__items');
   // cart.appendChild(createProductImageElement(thumbnail));
   cart.appendChild(cartItem);
-  saveCartItems();
-  totalPrice();
+  saveAndPrice();
 };
 
 function createAddCart() {
@@ -83,7 +87,7 @@ function createAddCart() {
       // console.log(button);
       button.onclick = addCartItem;
     });
-  }, 2000);
+  }, 1000);
 }
 
 function createProductItemElement({ sku, name, image, price }) {
@@ -112,10 +116,22 @@ const aplicaForEachApi = async () => {
   });
 };
 
+function cleanCart() {
+  const but = document.querySelector('.empty-cart');
+  const childrens = document.querySelector('.cart__items');
+  but.addEventListener('click', function () { 
+    while (childrens.hasChildNodes()) {
+      childrens.removeChild(childrens.firstChild);
+    }
+    saveAndPrice(); 
+  });
+}
+
 window.onload = () => {
   aplicaForEachApi();
   createAddCart();
   getSavedCartItems();
   insertTotalPrice();
   totalPrice();
+  cleanCart();
  };
