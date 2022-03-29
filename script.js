@@ -18,7 +18,7 @@ function insertTotalPrice() {
   button.insertAdjacentElement('beforebegin', price);
 }
 
-async function totalPrice() {
+function totalPrice() {
   const cartItem = document.querySelectorAll('.cart__item');
   let sum = 0;
   [...cartItem].forEach((element) => {
@@ -54,7 +54,7 @@ function getSkuFromProductItem(item) {
 
 async function cartItemClickListener(event) {
   event.target.parentNode.removeChild(event.target); //  Apagar item do carirnho 
-  totalPrice();
+  saveAndPrice();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
