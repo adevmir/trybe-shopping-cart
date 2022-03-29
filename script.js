@@ -13,9 +13,14 @@ function createTotalPice() {
 }
 
 function insertTotalPrice() {
+  const coin = document.createElement('span');
+  coin.className = 'coin-define';
+  coin.innerHTML = 'R$ ';
+
   const price = createTotalPice();
   const button = document.querySelector('.empty-cart');
-  button.insertAdjacentElement('beforebegin', price);
+  button.insertAdjacentElement('beforebegin', coin);
+  coin.appendChild(price);
 }
 
 function totalPrice() {
@@ -26,11 +31,11 @@ function totalPrice() {
     sum += parseFloat(value);
   });
   const teste2 = document.querySelector('.total-price');
-  teste2.innerHTML = `R$ ${sum.toFixed(2)}`; 
+  teste2.innerHTML = Number(sum.toFixed(2)); 
 }
 
 function saveAndPrice() {
-  saveCartItems(cart.innerHTML);
+  saveCartItems(cart.innerHTML); // salva lista
   totalPrice();
 }
 
@@ -86,14 +91,11 @@ const addCartItem = async (event) => {
 };
 
 async function createAddCart() {
-  setTimeout(() => {
-    const buttonFunction = document.querySelectorAll('.item__add');
-    buttonFunction.forEach((but) => {
-      button = but;
-      // console.log(button);
-      button.onclick = addCartItem;
-    });
-  }, 1000);
+  const buttonFunction = document.querySelectorAll('.item__add');
+  buttonFunction.forEach((but) => {
+    button = but;
+    button.onclick = addCartItem;
+  });
 }
 
 function createProductItemElement({ sku, name, image, price }) {
@@ -138,11 +140,11 @@ function loading() {
   listaProdutos.appendChild(section);
 }
 
-window.onload = () => {
+window.onload = async () => {
   loading();
-  cart.innerHTML = getSavedCartItems(); 
+  cart.innerHTML = await getSavedCartItems(); 
   addEvent();
-  aplicaForEachApi();
+  await aplicaForEachApi();
   createAddCart();
   insertTotalPrice();
   totalPrice();
