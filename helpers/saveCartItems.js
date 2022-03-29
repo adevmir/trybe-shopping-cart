@@ -1,6 +1,5 @@
-const saveCartItems = async () => {
-  const cart = document.querySelector('.cart__items').innerHTML;
-  localStorage.setItem('shopCart', cart);
+const saveCartItems = async (cartItems) => {
+  localStorage.setItem('cartItems', cartItems);
 };
 
 if (typeof module !== 'undefined') {

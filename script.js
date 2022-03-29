@@ -2,6 +2,8 @@
 
 // const { fetchItem } = require("./helpers/fetchItem");
 
+const cart = document.querySelector('.cart__items');
+
 function createTotalPice() {
   const price = document.createElement('p');
   price.className = 'total-price';
@@ -16,9 +18,9 @@ function insertTotalPrice() {
 }
 
 async function totalPrice() {
-  const cart = document.querySelectorAll('.cart__item');
+  const cartItem = document.querySelectorAll('.cart__item');
   let sum = 0;
-  [...cart].forEach((element) => {
+  [...cartItem].forEach((element) => {
     const value = element.innerHTML.split('$')[1];
     sum += parseFloat(value);
   });
@@ -27,7 +29,7 @@ async function totalPrice() {
 }
 
 function saveAndPrice() {
-  saveCartItems();
+  saveCartItems(cart.innerHTML);
   totalPrice();
 }
 
@@ -71,7 +73,6 @@ const addCartItem = async (event) => {
     salePrice: price,
   };
   const cartItem = createCartItemElement(item);
-  const cart = document.querySelector('.cart__items');
   // cart.appendChild(createProductImageElement(thumbnail));
   cart.appendChild(cartItem);
   saveAndPrice();
