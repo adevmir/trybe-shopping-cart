@@ -6,7 +6,7 @@ const cart = document.querySelector('.cart__items');
 const listaProdutos = document.querySelector('.items');
 
 function createTotalPice() {
-  const price = document.createElement('p');
+  const price = document.createElement('span');
   price.className = 'total-price';
 
   return price;
@@ -26,7 +26,7 @@ function totalPrice() {
     sum += parseFloat(value);
   });
   const teste2 = document.querySelector('.total-price');
-  teste2.innerHTML = sum.toFixed(2); 
+  teste2.innerHTML = `R$ ${sum.toFixed(2)}`; 
 }
 
 function saveAndPrice() {
