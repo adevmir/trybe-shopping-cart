@@ -127,9 +127,9 @@ function cleanCart() {
 }
 
 window.onload = () => {
+  cart.innerHTML = getSavedCartItems(); 
   aplicaForEachApi();
   createAddCart();
-  getSavedCartItems();
   insertTotalPrice();
   totalPrice();
   cleanCart();
