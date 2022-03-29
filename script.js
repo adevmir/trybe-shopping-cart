@@ -64,6 +64,13 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+function addEvent() {
+  const divs = document.querySelectorAll('.cart__item');
+  for (let i = 0; i < divs.length; i += 1) {
+    divs[i].addEventListener('click', cartItemClickListener);
+  }
+}
+
 const addCartItem = async (event) => {
   const sku = getSkuFromProductItem(event.target.parentNode);
   const { title, price } = await fetchItem(sku);
@@ -128,6 +135,7 @@ function cleanCart() {
 
 window.onload = () => {
   cart.innerHTML = getSavedCartItems(); 
+  addEvent();
   aplicaForEachApi();
   createAddCart();
   insertTotalPrice();
