@@ -125,11 +125,9 @@ const aplicaForEachApi = async () => {
 
 function cleanCart() {
   const but = document.querySelector('.empty-cart');
-  const childrens = document.querySelector('.cart__items');
-  but.addEventListener('click', function () { 
-    while (childrens.hasChildNodes()) {
-      childrens.removeChild(childrens.firstChild);
-    }
+  const alvo = document.querySelector('.cart__items');
+  but.addEventListener('click', function () {
+    alvo.innerHTML = '';
     saveAndPrice(); 
   });
 }
